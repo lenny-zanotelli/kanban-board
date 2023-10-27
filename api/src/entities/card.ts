@@ -1,6 +1,7 @@
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { List } from "./list";
 import { Tag } from "./tag";
+import { IsInt, Length } from "class-validator";
 
 @Entity()
 export class Card extends BaseEntity {
@@ -8,9 +9,11 @@ export class Card extends BaseEntity {
   id: number;
 
   @Column()
+  @Length(3, 30)
   title: string;
 
   @Column()
+  @IsInt()
   position: number;
 
   @Column()
