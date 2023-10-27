@@ -1,0 +1,30 @@
+GET http://localhost:3000/lists
+
+###
+GET http://localhost:3000/lists/1
+
+###
+POST http://localhost:3000/lists
+Content-Type: application/json
+
+{
+  "name": "ARCHIVE",
+  "position": 3
+}
+
+###
+PUT http://localhost:3000/lists/1
+Content-Type: application/json
+
+{
+
+  "name": "TEST"
+
+}
+
+###
+DELETE http://localhost:3000/lists/1
+
+
+
+

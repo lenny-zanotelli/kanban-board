@@ -1,8 +1,9 @@
 import 'reflect-metadata';
-import express, { Express, Request, Response} from 'express';
+import express, { Express} from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { dataSource } from '../config/data-source';
+import router from '../router';
 dotenv.config();
 
 
@@ -13,9 +14,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.get('/', (_req: Request, res: Response) => {
-  res.send('TEst server')
-});
+app.use(router);
 
 app.listen(PORT, async () => {
   await dataSource
