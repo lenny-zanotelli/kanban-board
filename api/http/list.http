@@ -1,15 +1,15 @@
 GET http://localhost:3000/lists
 
 ###
-GET http://localhost:3000/lists/1
+GET http://localhost:3000/lists/4
 
 ###
 POST http://localhost:3000/lists
 Content-Type: application/json
 
 {
-  "name": "ARCHIVE",
-  "position": 3
+  "name": "TEEEST",
+  "position": 1
 }
 
 ###
@@ -18,7 +18,7 @@ Content-Type: application/json
 
 {
 
-  "name": "TEST"
+  "name": "TEST1"
 
 }
 

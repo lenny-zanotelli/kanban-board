@@ -1,0 +1,27 @@
+GET http://localhost:3000/lists/4/cards
+
+###
+GET http://localhost:3000/cards/1
+
+###
+POST http://localhost:3000/cards
+Content-Type: application/json
+
+{
+  "title": "usessssss",
+  "color": "black",
+  "position": 1,
+  "list": 3
+}
+
+###
+PUT http://localhost:3000/cards/4
+Content-Type: application/json
+
+{
+ "title": "AHOUUUUH" 
+}
+
+###
+DELETE http://localhost:3000/cards/4
+

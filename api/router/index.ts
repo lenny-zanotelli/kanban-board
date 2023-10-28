@@ -9,8 +9,6 @@ router.get('/', (_req: Request, res: Response) => {
   res.send('Test server')
 });
 
-/**LISTS */
-
 router.use('/', listsRouter, cardsRouter);
 
 export default router;
