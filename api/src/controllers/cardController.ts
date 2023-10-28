@@ -10,11 +10,12 @@ const cardController = {
       cards = await Card.find({
         relations: {
           list: true,
+          tags: true
         },
         where: {
           list: {
             id: listId
-          }
+          },
         },
         order: {
           position: 'ASC'

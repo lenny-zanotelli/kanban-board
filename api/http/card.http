@@ -1,17 +1,19 @@
-GET http://localhost:3000/lists/4/cards
+###
+GET http://localhost:3000/lists/6/cards
 
 ###
-GET http://localhost:3000/cards/1
+GET http://localhost:3000/cards/5
 
 ###
 POST http://localhost:3000/cards
 Content-Type: application/json
 
 {
-  "title": "usessssss",
-  "color": "black",
+  "title": "REACT COMPONENT",
+  "color": "yellow",
   "position": 1,
-  "list": 3
+  "list": 6,
+  "tags": [{"id": 2}, {"id": 4}]
 }
 
 ###
