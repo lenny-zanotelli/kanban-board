@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import multer from 'multer';
 
 import { dataSource } from './config/data-source';
-import router from './router';
+import router from './src/router';
 dotenv.config();
 const upload = multer();
 
