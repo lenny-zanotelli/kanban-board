@@ -8,7 +8,7 @@ import multer from 'multer';
 import { dataSource } from './config/data-source';
 import router from './src/router';
 dotenv.config();
-const upload = multer();
+const bodyParser = multer();
 
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
@@ -30,7 +30,7 @@ app.use(helmet());
 // Authorize Cross Origin Resource Sharing
 app.use(cors());
 // We dont expect any files, only 'classic' inputs
-app.use(upload.none());
+app.use(bodyParser.none());
 app.use(router);
 
 app.use(express.static('assets'));

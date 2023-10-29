@@ -15,7 +15,7 @@ export class List extends BaseEntity{
   @IsInt()
   position: number;
 
-  @OneToMany(() => Card, (cards) => cards.list)
+  @OneToMany(() => Card, (cards) => cards.list , { cascade: true })
   cards: Card[]
   
 }
