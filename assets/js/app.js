@@ -31,7 +31,7 @@ const app = {
   addEventToListModalBtn: () => {
     const addListButton = document.getElementById('addListButton');
 
-    addListButton.addEventListener('click', app.showListModal);
+    addListButton.addEventListener('click', app.showAddListModal);
 
   },
 
@@ -42,17 +42,17 @@ const app = {
     );
 
     for (const btn of showCardBtns) {
-      btn.addEventListener('click', app.showCardModal);
+      btn.addEventListener('click', app.showAddCardModal);
     }
   },
 
-  showListModal: () => {
+  showAddListModal: () => {
     const modal = document.getElementById('addListModal');
 
     modal.classList.add('is-active');
   },
 
-  showCardModal: (event) => {
+  showAddCardModal: (event) => {
     event.preventDefault();
     const modal = document.getElementById('addCardModal');
     modal.classList.add('is-active');
@@ -128,9 +128,8 @@ const app = {
 
     clone.querySelector('h2').textContent = list.name;
 
-    // clone.querySelector('.panel').setAttribute('data-list-id', listId);
     clone.querySelector('.panel').dataset.listId = list.id;
-    console.log(list.id);
+    console.log('makeListINDOM', list.id);
 
     const listContainer = document.querySelector('.card-lists');
     const firstElement = listContainer.querySelector('.panel');
@@ -149,36 +148,35 @@ const app = {
     const template = document.getElementById('template-card');
 
     const clone = document.importNode(template.content, true);
-    clone.querySelector('.card-content').textContent = card.title;
+    clone.querySelector('.card-name').textContent = card.title;
+    console.log(card);
 
-    // const cardId = `card-${Date.now()}`;
     clone.querySelector('.box').dataset.cardId = card.id;
-    console.log(card.id);
+    console.log('MakecardINDOM', card.list.id);
 
     const goodList = document.querySelector(
-        `[data-list-id="${card.list_id}"]`
-    );
-
+      `[data-list-id="${card.list.id}"]`
+  );  
+    console.log('goodlist', goodList)
     const cardEmplacement = goodList.querySelector('.panel-block');
     cardEmplacement.appendChild(clone);
+
+
   },
 
   getListsFromAPI: async () => {
     try {
       const response = await fetch(`${app.base_url}/lists`);
-      const jsonData = await response.json();
-      console.log('JSON response', jsonData);
+      const json = await response.json();
+      console.log('JSON response', json);
 
-    if(!response.ok){ throw new Error(jsonData)};
-      console.log(jsonData);
-
-      for (const list of jsonData) {
-        console.log('list',list);
-        app.makeListInDOM(list);
-        // for (const card of list.cards) {
-        //   console.log(card);
-        //   app.makeCardInDOM(card);
-        // }
+      if (response.ok) {
+        json.forEach((list) => {
+          app.makeListInDOM(list)
+          list.cards.forEach((card) => {
+            app.makeCardInDOM(card)
+          })
+        })
       }
     } catch (error) {
       console.error(error);
