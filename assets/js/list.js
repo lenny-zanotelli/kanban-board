@@ -66,8 +66,27 @@ const listModule = {
       listContainer.appendChild(clone);
     }
 
-    app.addEventToCardModalBtn();
+    cardModule.addEventToCardModalBtn();
 
   },
+  getListsFromAPI: async () => {
+    try {
+      const response = await fetch(`${utilModule.base_url}/lists`);
+      const json = await response.json();
+      console.log('JSON response', json);
+
+      if (response.ok) {
+        json.forEach((list) => {
+          listModule.makeListInDOM(list)
+          list.cards.forEach((card) => {
+            cardModule.makeCardInDOM(card)
+          })
+        })
+      }
+    } catch (error) {
+      console.error(error);
+      
+    }
+  }
 
 }

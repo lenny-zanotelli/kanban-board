@@ -52,13 +52,15 @@ const cardController = {
       const newCard = Card.create(req.body);
       const errors = await validate(newCard);
       if (errors.length > 0) {
-        throw new Error('Validation failed');
+        res.status(400).send({
+          message: 'Validation failed',
+          errors
+        });      
       } else {
         await newCard.save();
       }
       res.status(200).send('A Card has been created')
     } catch (error) {
-      console.trace(error);
       res.status(500).send(error.toString());
     }
   },

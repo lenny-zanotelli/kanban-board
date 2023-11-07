@@ -10,9 +10,7 @@ Content-Type: application/json
 
 {
   "title": "REACT COMPONENT",
-  "color": "yellow",
-  "position": 1,
-  "list": 6,
+  "list": 44,
   "tags": [{"id": 2}, {"id": 4}]
 }
 

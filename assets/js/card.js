@@ -61,22 +61,21 @@ const cardModule = {
 
   makeCardInDOM: (card) => {
     const template = document.getElementById('template-card');
-
     const clone = document.importNode(template.content, true);
-    clone.querySelector('.card-name').textContent = card.title;
-    console.log(card);
 
+    clone.querySelector('.card-name').textContent = card.title;
     clone.querySelector('.box').dataset.cardId = card.id;
-    console.log('MakecardINDOM', card.list.id);
+    clone.querySelector('.box').style.backgroundColor = card.color;
+
+    const form = clone.querySelector('form');
+    form.querySelector('input[type=hidden]').value = card.id;
 
     const goodList = document.querySelector(
       `[data-list-id="${card.list.id}"]`
   );  
-    console.log('goodlist', goodList)
+
     const cardEmplacement = goodList.querySelector('.panel-block');
     cardEmplacement.appendChild(clone);
   },
-
-
 
 }

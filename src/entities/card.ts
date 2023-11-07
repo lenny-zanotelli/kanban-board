@@ -16,7 +16,7 @@ export class Card extends BaseEntity {
   @Generated('increment')
   position: number;
 
-  @Column()
+  @Column({ nullable: true })
   color: string;
 
   @ManyToOne(() => List, (list) => list.cards, { eager: true })
