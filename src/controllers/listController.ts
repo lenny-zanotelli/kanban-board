@@ -46,7 +46,10 @@ const listController = {
       const newList = List.create(req.body);
       const errors = await validate(newList);
       if (errors.length > 0) {
-        throw new Error('Validation Failed');
+        res.status(400).send({
+          message: 'Validation failed',
+          errors
+        });
       } else {
         await newList.save();
       }

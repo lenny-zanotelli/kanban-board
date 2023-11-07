@@ -1,6 +1,6 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Length } from "class-validator";
+import { BaseEntity, Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Card } from "./card";
-import { Length, IsInt } from "class-validator";
 
 @Entity()
 export class List extends BaseEntity{
@@ -12,7 +12,7 @@ export class List extends BaseEntity{
   name: string;
 
   @Column()
-  @IsInt()
+  @Generated('increment')
   position: number;
 
   @OneToMany(() => Card, (cards) => cards.list , { cascade: true })

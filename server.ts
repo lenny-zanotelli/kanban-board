@@ -1,14 +1,14 @@
 import 'reflect-metadata';
-import express, { Express} from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import helmet from 'helmet';
+import express, { Express } from 'express';
 import multer from 'multer';
+import helmet from 'helmet';
 
 import { dataSource } from './config/data-source';
 import router from './src/router';
 dotenv.config();
-const bodyParser = multer();
+const multipartParsers = multer();
 
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
@@ -26,11 +26,18 @@ dataSource
 app.use(express.json());
 /* ---------- Middlewares ---------- */
 // Help Secure App with various HTTP headers : helmetjs.github.io/
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'use.fontawesome.com']
+    },
+  })
+);
 // Authorize Cross Origin Resource Sharing
 app.use(cors());
 // We dont expect any files, only 'classic' inputs
-app.use(bodyParser.none());
+app.use(multipartParsers.none());
 app.use(router);
 
 app.use(express.static('assets'));

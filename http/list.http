@@ -9,8 +9,7 @@ POST http://localhost:3000/lists
 Content-Type: application/json
 
 {
-  "name": "FRONT",
-  "position": 6
+  "name": "FTqqqq"
 }
 
 ###

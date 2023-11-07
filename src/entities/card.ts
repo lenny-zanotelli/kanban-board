@@ -1,7 +1,7 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Length } from "class-validator";
+import { BaseEntity, Column, Entity, Generated, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { List } from "./list";
 import { Tag } from "./tag";
-import { IsInt, Length } from "class-validator";
 
 @Entity()
 export class Card extends BaseEntity {
@@ -13,7 +13,7 @@ export class Card extends BaseEntity {
   title: string;
 
   @Column()
-  @IsInt()
+  @Generated('increment')
   position: number;
 
   @Column()
