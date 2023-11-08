@@ -1,4 +1,4 @@
-# Kanban API with Postgres DB
+# Kanban Board
 
 ## Table of Contents
 - [Kanban API with Postgres DB](#kanban-api-with-postgres-db)
