@@ -1,7 +1,7 @@
 # Kanban Board
 
 ## Table of Contents
-- [Kanban API with Postgres DB](#kanban-api-with-postgres-db)
+- [Kanban Board](#Kanban Board)
   - [Table of Contents](#table-of-contents)
   - [General Information](#general-information)
   - [Technologies Used](#technologies-used)
