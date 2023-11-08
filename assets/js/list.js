@@ -53,7 +53,10 @@ const listModule = {
     // IMPORTNODE => Allow us to clone our template, true argument allow to retrieve all the children ot this template 
     const clone = document.importNode(template.content, true);
 
-    clone.querySelector('h2').textContent = list.name;
+    const listTitle = clone.querySelector('h2');
+    listTitle.textContent = list.name;
+    console.log(listTitle);
+
     clone.querySelector('.panel').dataset.listId = list.id;
 
     clone.querySelector('.delete-list-btn').addEventListener('click', listModule.deleteList);
@@ -66,6 +69,8 @@ const listModule = {
     } else {
       listContainer.appendChild(clone);
     }
+
+    listTitle.addEventListener('dblclick', listModule.showEditListForm);
 
     cardModule.addEventToCardModalBtn();
 
@@ -110,6 +115,53 @@ const listModule = {
       console.log(error);
       utilModule.notify(error.message, 5000, 'is-danger');
       
+    }
+  },
+  showEditListForm: (event) => {
+    const listTitle = event.target;
+    listTitle.classList.add('is-hiddden');
+
+    const form = listTitle.nextElementSibling;
+    form.querySelector('input[type=hidden]').value = listTitle.closest('.panel').dataset.listId;
+
+    form.addEventListener('submit', listModule.updateList);
+
+    form.classList.remove('is-hidden');
+  },
+
+  updateList: async (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const jsonData = Object.fromEntries(formData.entries());
+    const stringify = JSON.stringify(jsonData);
+    const listTitle = form.previousElementSibling;
+
+    console.log(stringify);
+    
+    try {
+      const response = await fetch(
+        `${utilModule.base_url}/lists/${formData.get('id')}`,
+        {
+          method: 'PUT',
+          body: stringify,
+          headers: {
+            'content-type': 'application/json'
+          }
+        }
+      );
+      const json = response.json();
+      if (!response.ok) throw json;
+
+      listTitle.textContent = json.name;
+      
+    } catch (error) {
+      utilModule.notify(error.message, 3000, 'is-danger');
+    } finally {
+      form.classList.add('is-hidden');
+      form.reset();
+      listTitle.classList.remove('is-hidden');
     }
   }
 

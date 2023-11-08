@@ -61,7 +61,14 @@ const listController = {
   modifyList: async (req: Request, res: Response) => {
     try {
       const listId: number = parseInt(req.params.id);
-      await List.update(listId, req.body);
+      const listToUpdate = await List.findOneByOrFail({
+        id: listId
+      });
+
+      if (req.body.name) {
+        listToUpdate.name = req.body.name;
+      }
+      await listToUpdate.save();
       res.status(200).send('List has been updated');
     } catch (error) {
       console.trace(error);
