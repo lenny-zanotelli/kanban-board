@@ -37,7 +37,7 @@ const listModule = {
       
       if (!response.ok) { throw new Error(json)}
       listModule.makeListInDOM(json);
-      utilModule.notify('is-success', 'New List has been created!');
+      utilModule.notify('is-success', 5000, 'New List has been created!');
     
     } catch (error) {
       utilModule.notify(error.message, 5000, 'is-danger');
@@ -55,7 +55,8 @@ const listModule = {
 
     clone.querySelector('h2').textContent = list.name;
     clone.querySelector('.panel').dataset.listId = list.id;
-    console.log('makeListINDOM', list.id);
+
+    clone.querySelector('.delete-list-btn').addEventListener('click', listModule.deleteList);
 
     const listContainer = document.querySelector('.card-lists');
     const firstElement = listContainer.querySelector('.panel');
@@ -85,6 +86,29 @@ const listModule = {
       }
     } catch (error) {
       console.error(error);
+    }
+  },
+
+  deleteList: async (event) => {
+    event.preventDefault();
+    const list = event.target.closest('.panel');
+    const listId = list.dataset.listId;
+
+    try {
+      const response = await fetch(
+        `${utilModule.base_url}/lists/${listId}`,
+        {
+          method: 'DELETE'
+        }
+      );
+      const json = response.json();
+      if (!response.ok) throw json;
+      
+      list.remove();
+      utilModule.notify('is-success', 5000,'List has been deleted!');
+    } catch (error) {
+      console.log(error);
+      utilModule.notify(error.message, 5000, 'is-danger');
       
     }
   }

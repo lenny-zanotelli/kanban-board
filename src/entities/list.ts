@@ -15,7 +15,10 @@ export class List extends BaseEntity{
   @Generated('increment')
   position: number;
 
-  @OneToMany(() => Card, (cards) => cards.list , { cascade: true })
+  @OneToMany(() => Card, (cards) => cards.list, 
+  { cascade: true, 
+    onDelete: "CASCADE" 
+  })
   cards: Card[]
   
 }

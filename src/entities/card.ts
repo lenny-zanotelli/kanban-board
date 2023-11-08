@@ -19,8 +19,11 @@ export class Card extends BaseEntity {
   @Column({ nullable: true })
   color: string;
 
-  @ManyToOne(() => List, (list) => list.cards, { eager: true })
-    list: List
+  @ManyToOne(() => List, (list) => list.cards, 
+  { eager: true, 
+    onDelete: "CASCADE" 
+  })
+  list: List
 
   @ManyToMany(() => Tag, (tag) => tag.cards)
   @JoinTable()
