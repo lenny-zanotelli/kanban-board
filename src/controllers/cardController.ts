@@ -67,13 +67,25 @@ const cardController = {
   modifyCard: async (req: Request, res: Response) => {
     try {
       const cardId: number = parseInt(req.params.id);
-      let card = await Card.findOneBy({
+      const cardToUpdate = await Card.findOneBy({
         id: cardId
       });
-      if (!card) {
+      if (!cardToUpdate) {
         res.status(404).send('Cant find card ' + cardId);
       } else {
-        await Card.update(cardId, req.body);
+        if (req.body.title) {
+          cardToUpdate.title = req.body.title;
+        }
+        if (req.body.list) {
+          cardToUpdate.list = req.body.listId;
+        }
+        if (req.body.color) {
+          cardToUpdate.color = req.body.color;
+        }
+        if (req.body.position) {
+          cardToUpdate.position = req.body.position;
+        }
+        await cardToUpdate.save();
         res.status(200).send('Card has been updated');
       }
     } catch (error) {

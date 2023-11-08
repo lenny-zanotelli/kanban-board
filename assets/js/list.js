@@ -42,10 +42,9 @@ const listModule = {
     } catch (error) {
       utilModule.notify(error.message, 5000, 'is-danger');
       console.log(error);
-    } finally {
+    } 
       utilModule.hideModals();
       form.reset();
-    }
   },
 
   makeListInDOM: (list) => {
@@ -129,7 +128,7 @@ const listModule = {
     form.classList.remove('is-hidden');
   },
 
-  updateList: async (event) => {
+  handleEditTitleListForm: async (event) => {
     event.preventDefault();
 
     const form = event.target;
@@ -138,11 +137,13 @@ const listModule = {
     const stringify = JSON.stringify(jsonData);
     const listTitle = form.previousElementSibling;
 
+    const listId = formData.get('id');
+
     console.log(stringify);
     
     try {
       const response = await fetch(
-        `${utilModule.base_url}/lists/${formData.get('id')}`,
+        `${utilModule.base_url}/lists/${listId}`,
         {
           method: 'PUT',
           body: stringify,
@@ -157,12 +158,13 @@ const listModule = {
       listTitle.textContent = json.name;
       
     } catch (error) {
+      console.log(error);
       utilModule.notify(error.message, 3000, 'is-danger');
-    } finally {
+    } 
       form.classList.add('is-hidden');
-      form.reset();
       listTitle.classList.remove('is-hidden');
-    }
+      form.reset();
+  
   }
 
 }

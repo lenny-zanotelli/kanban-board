@@ -145,18 +145,18 @@
 
   <!-- TEMPLATE CARD -->
   <template id="template-card">
-    <div class="box" data-card-id="M">
+    <div class="box" data-card-id="">
       <div class="columns">
         <div class="column card-name">Brancher l'API</div>
-        <form action="" method="POST" class="is-hidden">
-          <input type="hidden" name="cardId" />
+        <form action="" method="POST" class="is-hidden edit-card-form">
+          <input type="hidden" name="id" />
           <div class="control">
             Choisir une couleur :
             <input type="color" class="input is-small" name="color" value="" placeholder="Couleur de la carte" />
           </div>
           <div class="field has-addons">
             <div class="control">
-              <input type="text" class="input is-small" name="content" value="" placeholder="Nom de la carte" />
+              <input type="text" class="input is-small" name="title" value="" placeholder="Nom de la carte" />
             </div>
             <div class="control">
               <button class="button is-small is-success">
@@ -166,7 +166,7 @@
           </div>
         </form>
         <div class="column is-narrow">
-          <a href="#">
+          <a href="#" class="edit-card-icon">
             <span class="icon is-small has-text-primary">
               <i class="fas fa-pencil-alt"></i>
             </span>

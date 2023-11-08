@@ -10,6 +10,7 @@ const cardModule = {
       btn.addEventListener('click', cardModule.showAddCardModal);
     }
   },
+
   showAddCardModal: (event) => {
     event.preventDefault();
     const modal = document.getElementById('addCardModal');
@@ -24,6 +25,7 @@ const cardModule = {
 
   handleAddCardForm: async (event) => {
     event.preventDefault();
+
     const form = event.target;
     try {
       const formData = new FormData(form);
@@ -48,86 +50,86 @@ const cardModule = {
   
       cardModule.makeCardInDOM(json);
       utilModule.notify('is-success', 'New Card has been created!');
-
+      
     } catch (error) {
       utilModule.notify(error.message, 5000, 'is-danger');
       console.log(error);
-    
-    } finally {
-      utilModule.hideModals();
-      form.reset();
+      
     }
+    utilModule.hideModals();
+    form.reset();
+      
   },
 
   makeCardInDOM: (card) => {
     const template = document.getElementById('template-card');
     const clone = document.importNode(template.content, true);
-
     clone.querySelector('.card-name').textContent = card.title;
     clone.querySelector('.box').dataset.cardId = card.id;
+    clone.querySelector('form input[name="id"]').value = card.id;
     clone.querySelector('.box').style.backgroundColor = card.color;
 
-    const form = clone.querySelector('form');
-    form.querySelector('input[type=hidden]').value = card.id;
+    // const form = clone.querySelector('form');
+    // form.querySelector('input[type=hidden]').value = card.id;
 
-    const goodList = document.querySelector(
-      `[data-list-id="${card.list.id}"]`
-  );  
-
-    const cardEmplacement = goodList.querySelector('.panel-block');
-
-    const updateCardBtn = clone.querySelector('.box .is-narrow a:first-child');
-
+    clone.querySelector('.edit-card-icon').addEventListener('click', cardModule.showEditCardForm);
+    clone.querySelector('.edit-card-form').addEventListener('submit', cardModule.handleEditCardForm);
     clone.querySelector('.delete-card-btn').addEventListener('click', cardModule.deleteCard);
 
-    cardEmplacement.appendChild(clone);
+    const goodList = document.querySelector(`[data-list-id="${card.list.id}"]`);
+    goodList.querySelector('.panel-block').appendChild(clone);
 
-    updateCardBtn.addEventListener('click', cardModule.showUpdateCardForm)
   },
 
-  showUpdateCardForm: (event) => {
-    event.preventDefault();
-    const divParent = event.target.closest('.columns');
+  showEditCardForm: (event) => {
 
-    const title = divParent.querySelector('.card-content');
-    const form = divParent.querySelector('form');
-
-    form.addEventListener('submit', cardModule.handleUpdateCard);
-
-    title.classList.add('is-hidden');
-    form.classList.remove('is-hidden');
+    const cardDom = event.target.closest('.box');
+    cardDom.querySelector('.card-name').classList.add('is-hidden');
+    cardDom.querySelector('.edit-card-form').classList.remove('is-hidden');
+    
   },
 
-  handleUpdateCard: async (event) => {
+  handleEditCardForm: async (event) => {
     event.preventDefault();
+
     const form = event.target;
     const formData = new FormData(form);
     const jsonData = Object.fromEntries(formData.entries());
     const stringify = JSON.stringify(jsonData);
 
+    const cardTitle = form.previousElementSibling;
+    const cardId = formData.get('id');
+
     try {
       const response = await fetch(
-        `${utilModule.base_url}/cards/${formData.get('cardId')}`,
+        `${utilModule.base_url}/cards/${cardId}`,
         {
           method: 'PUT',
-          body: stringify
+          body: stringify,
+          headers: {
+            'content-type': 'application/json'
+          }
         }
       );
 
       const json = await response.json();
-      if (!response.ok) throw json;
+      if (!response.ok) { throw json}
       
       form.classList.add('is-hidden');
       form.reset();
 
-      const cardContent = form.previousElementSibling;
-      cardContent.textContent = json.name;
-      cardContent.classList.remove('is-hidden');
-      cardContent.parentElement.parentElement.style.backgroundColor = json.color;
+      cardTitle.textContent = json.title;
+      cardTitle.parentElement.parentElement.style.backgroundColor = json.color;
+
+      utilModule.notify('is-success', 5000,'Card has been updated!');
+
     } catch (error) {
+      console.log(error);
       utilModule.notify(error.message, 5000, 'is-danger');
-      
     }
+
+    form.classList.add('is-hidden');
+    cardTitle.classList.remove('is-hidden');
   },
 
   deleteCard: async (event) => {
