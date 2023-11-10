@@ -27,11 +27,10 @@ const cardModule = {
     event.preventDefault();
 
     const form = event.target;
+    const formData = new FormData(form);
+    const jsonData = Object.fromEntries(formData.entries());
+    const stringify = JSON.stringify(jsonData);
     try {
-      const formData = new FormData(form);
-      const jsonData = Object.fromEntries(formData.entries());
-      const stringify = JSON.stringify(jsonData);
-
       console.log(stringify);
   
       const response = await fetch(`${utilModule.base_url}/cards`, {
@@ -52,8 +51,8 @@ const cardModule = {
       utilModule.notify('is-success', 'New Card has been created!');
       
     } catch (error) {
-      utilModule.notify(error.message, 5000, 'is-danger');
       console.log(error);
+      utilModule.notify(error.message, 5000, 'is-danger');
       
     }
     utilModule.hideModals();
@@ -69,12 +68,10 @@ const cardModule = {
     clone.querySelector('form input[name="id"]').value = card.id;
     clone.querySelector('.box').style.backgroundColor = card.color;
 
-    // const form = clone.querySelector('form');
-    // form.querySelector('input[type=hidden]').value = card.id;
-
     clone.querySelector('.edit-card-icon').addEventListener('click', cardModule.showEditCardForm);
     clone.querySelector('.edit-card-form').addEventListener('submit', cardModule.handleEditCardForm);
     clone.querySelector('.delete-card-btn').addEventListener('click', cardModule.deleteCard);
+    clone.querySelector('.associate-tag-icon').addEventListener('click', tagModule.showAssociateTagModal);
 
     const goodList = document.querySelector(`[data-list-id="${card.list.id}"]`);
     goodList.querySelector('.panel-block').appendChild(clone);

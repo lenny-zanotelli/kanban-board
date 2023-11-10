@@ -22,6 +22,10 @@ const app = {
     // SELECT ADD CARD FORM
     const addCardform = document.querySelector('#addCardModal form');
     addCardform.addEventListener('submit', cardModule.handleAddCardForm);
+
+    // SELECT ADD TAG FORM
+    const associateTagForm = document.querySelector('#associateTagModal form');
+    associateTagForm.addEventListener('submit', tagModule.associateTagToCard);
       
     },
 

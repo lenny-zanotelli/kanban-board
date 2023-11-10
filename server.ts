@@ -42,6 +42,7 @@ app.use(router);
 
 app.use(express.static('assets'));
 
+/* ---------- App ---------- */
 app.listen(PORT, () => {
   console.log(`Server is running at : http://localhost:${PORT}`);
 });

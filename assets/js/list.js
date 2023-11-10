@@ -21,8 +21,6 @@ const listModule = {
       const formData = new FormData(form);
       const jsonData = Object.fromEntries(formData.entries());
       const stringify = JSON.stringify(jsonData);
-
-      console.log(stringify);
   
       const response = await fetch(`${utilModule.base_url}/lists`, {
         method: 'POST',
@@ -31,7 +29,6 @@ const listModule = {
           'content-type': 'application/json'
         }
       });
-      console.log(response);
       
       const json = await response.json();
       
@@ -54,7 +51,6 @@ const listModule = {
 
     const listTitle = clone.querySelector('h2');
     listTitle.textContent = list.name;
-    console.log(listTitle);
 
     clone.querySelector('.panel').dataset.listId = list.id;
 
@@ -78,18 +74,19 @@ const listModule = {
     try {
       const response = await fetch(`${utilModule.base_url}/lists`);
       const json = await response.json();
-      console.log('JSON response', json);
 
       if (response.ok) {
         json.forEach((list) => {
           listModule.makeListInDOM(list)
           list.cards.forEach((card) => {
             cardModule.makeCardInDOM(card)
-          })
-        })
-      }
+          });
+        });
+      };
     } catch (error) {
       console.error(error);
+      utilModule.notify(error.message, 5000, 'is-danger');
+
     }
   },
 

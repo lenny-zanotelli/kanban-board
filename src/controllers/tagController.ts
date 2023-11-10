@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Tag } from '../entities/tag';
 import { validate } from 'class-validator';
+import { Card } from '../entities/card';
 
 const tagController = {
   getAllTags: async (_req: Request, res: Response) => {
@@ -78,6 +79,32 @@ const tagController = {
       res.status(500).send(error.toString());
     }
   },
+
+  //TODO : route associate a tag with a card WIP
+
+  // associateTagToCard: async (req: Request, res: Response) => {
+  //   try {
+  //     const { cardId, tagId } = req.body;
+
+  //     let card = await Card.findOneBy({
+  //       id: cardId,
+  //     });
+
+  //     if (!card) {
+  //       return res.status(404).json('Cannot find card with id' + cardId);
+  //     }
+
+  //     let tag = await Tag.findOneBy({
+  //       id: tagId
+  //     });
+
+  //     res.status(200).send
+      
+      
+  //   } catch (error) {
+      
+  //   }
+  // }
 }
 
 export default tagController
