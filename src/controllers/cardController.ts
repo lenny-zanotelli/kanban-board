@@ -85,6 +85,9 @@ const cardController = {
         if (req.body.position) {
           cardToUpdate.position = req.body.position;
         }
+        if (req.body.tags) {
+          cardToUpdate.tags = [...cardToUpdate.tags, ...req.body.tags];
+        }
         await cardToUpdate.save();
         res.status(200).send('Card has been updated');
       }

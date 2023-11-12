@@ -2,7 +2,7 @@
 GET http://localhost:3000/lists
 
 ###
-GET http://localhost:3000/lists/4
+GET http://localhost:3000/lists/60
 
 ###
 POST http://localhost:3000/lists

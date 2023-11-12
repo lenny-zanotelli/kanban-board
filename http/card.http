@@ -2,7 +2,7 @@
 GET http://localhost:3000/lists/6/cards
 
 ###
-GET http://localhost:3000/cards/5
+GET http://localhost:3000/cards/11
 
 ###
 POST http://localhost:3000/cards
@@ -10,16 +10,16 @@ Content-Type: application/json
 
 {
   "title": "REACT COMPONENT",
-  "list": 44,
-  "tags": [{"id": 2}, {"id": 4}]
+  "list": 60,
+  "tags": [{"id": 3}, {"id": 4}]
 }
 
 ###
-PUT http://localhost:3000/cards/4
+PUT http://localhost:3000/cards/11
 Content-Type: application/json
 
 {
- "title": "AHOUUUUH" 
+ "tags": [{"id": 2}]
 }
 
 ###
