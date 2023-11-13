@@ -10,10 +10,10 @@ const tagController = {
           cards: true
         }
       });
-      res.status(200).send(tags);
+      res.status(200).json(tags);
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
       
     }
   },
@@ -23,10 +23,10 @@ const tagController = {
       const tag = await Tag.findOneByOrFail({
         id: tagId
       });
-      res.status(200).send(tag);
+      res.status(200).json(tag);
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
   createTag: async (req: Request, res: Response) => {
@@ -38,10 +38,10 @@ const tagController = {
       } else {
         await newTag.save();
       }
-      res.status(200).send('A Tag has been created');
+      res.status(200).json('A Tag has been created');
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
   modifyTag: async (req: Request, res: Response) => {
@@ -51,14 +51,14 @@ const tagController = {
         id: tagId
       });
       if (!tag) {
-        res.status(400).send('Cant find tag ' + tagId);
+        res.status(400).json('Cant find tag ' + tagId);
       } else { 
         await Tag.update(tagId, req.body);
-        res.status(200).send('Tag has been updated');
+        res.status(200).json('Tag has been updated');
       }
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString())
+      res.status(500).json(error.toString())
     }
   },
   deleteTag: async (req: Request, res: Response) => {
@@ -68,14 +68,14 @@ const tagController = {
         id: tagId
       });
       if (!tag) {
-        res.status(404).send('Cant find tag ' + tagId);
+        res.status(404).json('Cant find tag ' + tagId);
       } else {
         await Tag.delete(tagId);
-        res.status(200).send('Tag has been deleted');
+        res.status(200).json('Tag has been deleted');
       }
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
 

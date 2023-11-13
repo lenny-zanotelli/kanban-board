@@ -22,13 +22,13 @@ const cardController = {
         }
       })
       if (!cards) {
-        res.status(404).send('Cant find cards with id list' + listId);
+        res.status(404).json('Cant find cards with id list' + listId);
       } else {
-        res.status(200).send(cards);
+        res.status(200).json(cards);
       }
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
   getOneCard: async (req: Request, res: Response) => {
@@ -38,13 +38,13 @@ const cardController = {
         id: cardId
       });
       if(!card) {
-        res.status(404).send('Cant find card' + cardId);
+        res.status(404).json('Cant find card' + cardId);
       } else {
-        res.status(200).send(card);
+        res.status(200).json(card);
       }
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());      
+      res.status(500).json(error.toString());      
     }
   },
   createCard: async (req: Request, res: Response) => {
@@ -52,16 +52,16 @@ const cardController = {
       const newCard = Card.create(req.body);
       const errors = await validate(newCard);
       if (errors.length > 0) {
-        res.status(400).send({
+        res.status(400).json({
           message: 'Validation failed',
           errors
         });      
       } else {
         await newCard.save();
       }
-      res.status(200).send('A Card has been created')
+      res.status(200).json('A Card has been created')
     } catch (error) {
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
   modifyCard: async (req: Request, res: Response) => {
@@ -71,7 +71,7 @@ const cardController = {
         id: cardId
       });
       if (!cardToUpdate) {
-        res.status(404).send('Cant find card ' + cardId);
+        res.status(404).json('Cant find card ' + cardId);
       } else {
         if (req.body.title) {
           cardToUpdate.title = req.body.title;
@@ -89,11 +89,11 @@ const cardController = {
           cardToUpdate.tags = [...cardToUpdate.tags, ...req.body.tags];
         }
         await cardToUpdate.save();
-        res.status(200).send('Card has been updated');
+        res.status(200).json('Card has been updated');
       }
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
   deleteCard: async (req: Request, res: Response) => {
@@ -103,15 +103,15 @@ const cardController = {
         id: cardId
       });
       if (!card) {
-        res.status(404).send('Cant find card ' + cardId);
+        res.status(404).json('Cant find card ' + cardId);
       } else {
         await Card.delete(cardId);
-        res.status(200).send('Card has been deleted');
+        res.status(200).json('Card has been deleted');
 
       }
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   }
 }

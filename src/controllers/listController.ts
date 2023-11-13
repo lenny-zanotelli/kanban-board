@@ -17,10 +17,10 @@ const listController = {
             }
           }
         })
-      res.status(200).send(lists);
+      res.status(200).json(lists);
     } catch(error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
   getOneList: async (req: Request, res: Response) => {
@@ -30,13 +30,13 @@ const listController = {
         id: listId
       });
       if (list) {
-        res.status(200).send(list);
+        res.status(200).json(list);
       } else {
-        res.status(404).send('Cant find list ' + listId);
+        res.status(404).json('Cant find list ' + listId);
       }
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
       
     }
 
@@ -46,16 +46,16 @@ const listController = {
       const newList = List.create(req.body);
       const errors = await validate(newList);
       if (errors.length > 0) {
-        res.status(400).send({
+        res.status(400).json({
           message: 'Validation failed',
           errors
         });
       } else {
         await newList.save();
       }
-      res.status(200).send('A List has been created');
+      res.status(200).json('A List has been created');
     } catch (error) {
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
   modifyList: async (req: Request, res: Response) => {
@@ -69,20 +69,20 @@ const listController = {
         listToUpdate.name = req.body.name;
       }
       await listToUpdate.save();
-      res.status(200).send('List has been updated');
+      res.status(200).json('List has been updated');
     } catch (error) {
       console.trace(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   },
   deleteList: async (req: Request, res: Response) => {
     try {
       const listId: number = parseInt(req.params.id);
       await List.delete(listId);
-      res.status(200).send('List has been deleted')
+      res.status(200).json('List has been deleted')
     } catch (error) {
       console.log(error);
-      res.status(500).send(error.toString());
+      res.status(500).json(error.toString());
     }
   }
 }
