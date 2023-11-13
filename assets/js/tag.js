@@ -32,7 +32,6 @@ const tagModule = {
 
     const select = modal.querySelector('select[name="tagId"]');
     select.content = "";
-    console.log(select);
 
     try {
       const response = await fetch(`${utilModule.base_url}/tags`);
@@ -71,7 +70,6 @@ const tagModule = {
           'content-type': 'application/json'
         }
       });
-      console.log(response.headers  );
       const json = await response.json();
       console.log(json);
       if (!response.ok) { throw json }

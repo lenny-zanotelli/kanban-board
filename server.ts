@@ -7,7 +7,8 @@ import helmet from 'helmet';
 
 import { dataSource } from './config/data-source';
 import router from './src/router';
-import { notFoundMiddleware } from 'src/middlewares/notFoundMiddleware';
+import { notFoundMiddleware } from './src/middlewares/notFoundMiddleware';
+import { bodySanitizer } from './src/middlewares/bodySanitizer';
 dotenv.config();
 const multipartParsers = multer();
 
@@ -40,7 +41,7 @@ app.use(
 app.use(cors());
 // We dont expect any files, only 'classic' inputs
 app.use(multipartParsers.none());
-app.use()
+app.use(bodySanitizer);
 app.use(router);
 
 app.use(express.static('assets'));

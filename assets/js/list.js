@@ -31,6 +31,7 @@ const listModule = {
       });
       
       const json = await response.json();
+      console.log(json);
       
       if (!response.ok) { throw new Error(json)}
       listModule.makeListInDOM(json);
@@ -149,7 +150,7 @@ const listModule = {
           }
         }
       );
-      const json = response.json();
+      const json = await response.json();
       if (!response.ok) throw json;
 
       listTitle.textContent = json.name;
