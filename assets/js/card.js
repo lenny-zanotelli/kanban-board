@@ -106,7 +106,7 @@ const cardModule = {
           headers: {
             'content-type': 'application/json'
           }
-        }
+        } 
       );
 
       const json = await response.json();

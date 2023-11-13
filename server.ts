@@ -7,13 +7,15 @@ import helmet from 'helmet';
 
 import { dataSource } from './config/data-source';
 import router from './src/router';
+import { notFoundMiddleware } from 'src/middlewares/notFoundMiddleware';
 dotenv.config();
 const multipartParsers = multer();
 
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
 
-//Initialize Database with TypeOrm
+
+/* -- Initialize Database with TypeOrm -- */
 dataSource
 .initialize()
 .then(() => {
@@ -38,11 +40,14 @@ app.use(
 app.use(cors());
 // We dont expect any files, only 'classic' inputs
 app.use(multipartParsers.none());
+app.use()
 app.use(router);
 
 app.use(express.static('assets'));
+app.use(notFoundMiddleware);
 
 /* ---------- App ---------- */
+
 app.listen(PORT, () => {
   console.log(`Server is running at : http://localhost:${PORT}`);
 });
