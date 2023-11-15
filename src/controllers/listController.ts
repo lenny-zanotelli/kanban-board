@@ -8,7 +8,11 @@ const listController = {
     try {
         lists = await List.find({
           relations: {
-            cards: true,
+            cards: {
+              tags: {
+                cards: true
+              }
+            }
           },
           order: {
             position: "ASC",

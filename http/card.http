@@ -1,8 +1,8 @@
 ###
-GET http://localhost:3000/lists/6/cards
+GET http://localhost:3000/lists/1/cards
 
 ###
-GET http://localhost:3000/cards/11
+GET http://localhost:3000/cards/1
 
 ###
 POST http://localhost:3000/cards

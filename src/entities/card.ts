@@ -25,8 +25,9 @@ export class Card extends BaseEntity {
   })
   list: List
 
-  @ManyToMany(() => Tag, (tag) => tag.cards, {
+  @ManyToMany(() => Tag,  (tag) => tag.cards, {
     eager: true,
+    cascade: ['insert'],
   })
   @JoinTable()
   tags: Tag[];

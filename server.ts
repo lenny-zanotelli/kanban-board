@@ -4,10 +4,11 @@ import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import multer from 'multer';
 import helmet from 'helmet';
+import morgan from 'morgan';
 
 import { dataSource } from './config/data-source';
 import router from './src/router';
-import { notFoundMiddleware } from './src/middlewares/notFoundMiddleware';
+import { notFoundMiddleware } from './src/middlewares/notFound';
 import { bodySanitizer } from './src/middlewares/bodySanitizer';
 dotenv.config();
 const multipartParsers = multer();
@@ -28,6 +29,7 @@ dataSource
 
 app.use(express.json());
 /* ---------- Middlewares ---------- */
+app.use(morgan('dev'));
 // Help Secure App with various HTTP headers : helmetjs.github.io/
 app.use(
   helmet.contentSecurityPolicy({

@@ -76,14 +76,22 @@ const listModule = {
       const response = await fetch(`${utilModule.base_url}/lists`);
       const json = await response.json();
 
-      if (response.ok) {
-        json.forEach((list) => {
-          listModule.makeListInDOM(list)
-          list.cards.forEach((card) => {
-            cardModule.makeCardInDOM(card)
-          });
-        });
-      };
+      if (!response.ok) { throw new Error('Issue with http request', json)}
+      console.log('jsonlist', json);
+
+      for (const list of json) {
+        listModule.makeListInDOM(list);
+
+        for (const card of list.cards) {
+          cardModule.makeCardInDOM(card);
+
+          for (const tag of card.tags) {
+            tagModule.makeTagInDOM(tag);
+          }
+        }
+      }
+
+
     } catch (error) {
       console.error(error);
       utilModule.notify(error.message, 5000, 'is-danger');
