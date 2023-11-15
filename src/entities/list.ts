@@ -19,6 +19,6 @@ export class List extends BaseEntity{
   { cascade: true, 
     onDelete: "CASCADE" 
   })
-  cards: Card[]
+  cards: Card[];
   
 }

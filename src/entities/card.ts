@@ -5,6 +5,7 @@ import { Tag } from "./tag";
 
 @Entity()
 export class Card extends BaseEntity {
+  [x: string]: any;
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,11 +26,12 @@ export class Card extends BaseEntity {
   })
   list: List
 
-  @ManyToMany(() => Tag,  (tag) => tag.cards, {
-    eager: true,
-    cascade: ['insert'],
+  @ManyToMany(() => Tag,  (tag) => tag.cards, { eager: true })
+  @JoinTable({
+    name: 'card_has_tags',
+    joinColumn: { name: 'cardId' },
+    inverseJoinColumn: { name: 'tagId'}
   })
-  @JoinTable()
-  tags: Tag[];
+  tags: Tag[]
 
 }

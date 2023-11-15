@@ -3,21 +3,27 @@ const tagModule = {
   makeTagInDOM: (tag) => {
     const tagDOM = document.createElement('span');
 
-    console.log('tagM', tag);
-      tagDOM.dataset.tagId = tag.id;
-      tagDOM.textContent = tag.name;
-      tagDOM.style.backgroundColor = tag.color;
-      tagDOM.classList.add('tag');
-
+    tagDOM.dataset.tagId = tag.id;
+    tagDOM.textContent = tag.name;
+    tagDOM.style.backgroundColor = tag.color;
+    tagDOM.classList.add('tag');
+    
     // tagDOM.addEventListener('dblclick', tagModule.dissociateTagFromCard);
-
-    const cardId = tag.cards[0]?.id;
-    console.log('cardid', cardId);
-
-    const goodCard = document.querySelector(`.box[data-card-id="${cardId}"]`);
-    goodCard.querySelector(".tags-container").appendChild(tagDOM);
-    console.log('goodcard', goodCard);
- 
+    if (tag.card && tag.cards.length > 0){
+      
+      for (const card of tag.cards) {
+          const cardId = card.id;
+          console.log('cardid', cardId);
+          
+          if (cardId === tag.card.id) {
+            const goodCard = document.querySelector(`.box[data-card-id="${cardId}"]`);
+            goodCard.querySelector(".tags-container").appendChild(tagDOM);
+            console.log('goodcard', goodCard);
+            break;
+          }
+        }    
+      }
+      console.log('tagM', tag);
   },
 
   showAssociateTagModal: async (event) => {
@@ -71,10 +77,14 @@ const tagModule = {
       console.log('tagcard', json);
       if (!response.ok) { throw Error('Cant havejson tag') }
 
-      const tag = json.tags.find(tag => tag.id == formData.get("tagId"));
+      if (json.tags && Array.isArray(json.tags)) {
+        const tag = json.tags.find(tag => tag.id == formData.get("tagId"));
+        
+        console.log('tag tag', tag);
+        tagModule.makeTagInDOM(tag);
 
-      console.log('tag tag', tag);
-      tagModule.makeTagInDOM(tag);
+      }
+
       
     } catch (error) {
       console.log(error);

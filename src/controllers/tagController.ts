@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import { Request, Response } from 'express';
-import { Tag } from '../entities/tag';
 import { Card } from '../entities/card';
+import { Tag } from '../entities/tag';
 
 const tagController = {
   getAllTags: async (_req: Request, res: Response) => {
@@ -84,25 +84,26 @@ const tagController = {
       const cardId: number = parseInt(req.params.id);
       const tagId: number = parseInt(req.body.tagId);
 
-      let card = await Card.findOneByOrFail({ id: cardId });
-
+  
+    let card = await Card.findOne({
+      relations: ['tags'],
+        where: {
+          id: cardId 
+        }
+    });
+        
       if (!card) {
         return res.status(404).json('Cannot find card with id '+ cardId);
       }
+
 
       let tag = await Tag.findOne({
         relations: ['cards'],
          where: {
            id: tagId,
-           cards: {
-            tags: {
-              id: tagId
-            }
-           }
           },
       });
 
-      console.log(tag);
       
       if (!tag) {
         return res.status(404).json('Cannot find tag with id '+ tagId);
@@ -112,7 +113,7 @@ const tagController = {
       await card.save();
 
       console.log(card)
-      return res.status(200).json(card);
+      return res.status(200).json({card});
 
     } catch (error) {
       console.log(error);

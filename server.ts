@@ -6,7 +6,7 @@ import multer from 'multer';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-import { dataSource } from './config/data-source';
+import db from './config/db';
 import router from './src/router';
 import { notFoundMiddleware } from './src/middlewares/notFound';
 import { bodySanitizer } from './src/middlewares/bodySanitizer';
@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000;
 
 
 /* -- Initialize Database with TypeOrm -- */
-dataSource
+db
 .initialize()
 .then(() => {
     console.log('Data Source has been initialized successfully.')

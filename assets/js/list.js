@@ -33,7 +33,7 @@ const listModule = {
       const json = await response.json();
       console.log(json);
       
-      if (!response.ok) { throw new Error(json)}
+      if (!response.ok) { throw new Error(json) }
       listModule.makeListInDOM(json);
       utilModule.notify('is-success', 5000, 'New List has been created!');
     

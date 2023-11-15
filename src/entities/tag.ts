@@ -14,6 +14,8 @@ export class Tag extends BaseEntity {
   @Column()
   color: string;
 
-  @ManyToMany(() => Card, (card) => card.tags)
+  @ManyToMany(() => Card, (card) => card.tags, {
+    cascade: true,
+  })
   cards: Card[]
 }

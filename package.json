@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev server.ts",
+    "resetDb": "ts-node-dev src/resetDb.ts",
     "db:reset": "psql -U kanban -d kanban -f ./data/insert_data.sql"
   },
   "keywords": [],
