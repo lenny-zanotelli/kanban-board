@@ -84,10 +84,9 @@ const listModule = {
 
         for (const card of list.cards) {
           cardModule.makeCardInDOM(card);
-          console.log('list card tags', card.cardToTags);
-          // for (const tag of card.tags) {
-          //   tagModule.makeTagInDOM(tag);
-          // }
+          for (const tag of card.cardToTags) {
+            tagModule.makeTagInDOM(tag);
+          }
         }
       }
 

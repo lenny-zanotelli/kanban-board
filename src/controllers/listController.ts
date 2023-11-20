@@ -11,6 +11,7 @@ const listController = {
             cards: {
               cardToTags: {
                 tag: true,
+                card: true,
               }
             }
           },

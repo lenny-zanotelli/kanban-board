@@ -4,18 +4,17 @@ const tagModule = {
     const tagDOM = document.createElement('span');
     console.log('tagM', tag);
 
-    tagDOM.dataset.tagId = tag.id;
-    tagDOM.textContent = tag.name;
-    tagDOM.style.backgroundColor = tag.color;
+    tagDOM.dataset.tagId = tag.tag.id;
+    tagDOM.textContent = tag.tag.name;
+    tagDOM.style.backgroundColor = tag.tag.color;
     tagDOM.classList.add('tag');
     
     // tagDOM.addEventListener('dblclick', tagModule.dissociateTagFromCard);      
-          const cardId = tag.cards[0].id;
-          console.log('cardid', cardId);
-          
-            const goodCard = document.querySelector(`.box[data-card-id="${cardId}"]`);
-            goodCard.querySelector(".tags-container").appendChild(tagDOM);
-            console.log('goodcard', goodCard);
+    const cardId = tag.card.id;
+    
+    const goodCard = document.querySelector(`.box[data-card-id="${cardId}"]`);
+    goodCard.querySelector(".tags-container").appendChild(tagDOM);
+    console.log('goodcard', goodCard);
     
   },
 
@@ -73,8 +72,8 @@ const tagModule = {
       if (json.tags && Array.isArray(json.tags)) {
         const tag = json.tags.find(tag => tag.id == formData.get("tagId"));
         
-        console.log('tag tag', tag);
         tagModule.makeTagInDOM(tag);
+        console.log('tag tag', tag);
 
       }
 

@@ -1,13 +1,13 @@
 import { validate } from 'class-validator';
 import { Request, Response } from 'express';
 import { Tag } from '../entities/tag';
+import { Card } from '../entities/card';
+import { CardToTag } from '../entities/cardToTag';
 
 const tagController = {
   getAllTags: async (_req: Request, res: Response) => {
     try {
-      const tags = await Tag.find({
-
-      });
+      const tags = await Tag.find();
       res.status(200).json(tags);
     } catch (error) {
       console.trace(error);
@@ -76,48 +76,52 @@ const tagController = {
       res.status(500).json(error.toString());
     }
   },
-  // associateTagToCard: async (req: Request, res: Response) => {
-  //   try {
-  //     const cardId: number = parseInt(req.params.id);
-  //     const tagId: number = parseInt(req.body.tagId);
+  associateTagToCard: async (req: Request, res: Response) => {
+    try {
+      const cardId: number = parseInt(req.params.id);
+      const tagId: number = parseInt(req.body.tagId);
 
   
-  //   let card = await Card.findOne({
-  //     relations: ['tags'],
-  //       where: {
-  //         id: cardId 
-  //       }
-  //   });
+    let card = await Card.findOne({
+      relations: {
+        cardToTags: {
+          tag: true,
+          card: true
+        }
+      },
+        where: {
+          id: cardId 
+        }
+    });
         
-  //     if (!card) {
-  //       return res.status(404).json('Cannot find card with id '+ cardId);
-  //     }
+      if (!card) {
+        return res.status(404).json('Cannot find card with id '+ cardId);
+      }
 
+      let tag = await Tag.findOneByOrFail({id: tagId});
 
-  //     let tag = await Tag.findOne({
-  //       relations: ['cards'],
-  //        where: {
-  //          id: tagId,
-  //         },
-  //     });
+      if (!tag) {
+        return res.status(404).json('Cannot find tag with id '+ tagId);
+      }
 
-      
-  //     if (!tag) {
-  //       return res.status(404).json('Cannot find tag with id '+ tagId);
-  //     }
+      const cardToTag = CardToTag.create({
+        card: card,
+        tag: tag
+      });
+      await cardToTag.save();
 
-  //     card.tags.push(tag)
-  //     await card.save();
+      card.cardToTags.push(cardToTag);
+      await card.save();
 
-  //     console.log(card)
-  //     return res.status(200).json({card});
+      console.log(card.cardToTags)
+      return res.status(200).json(card);
 
-  //   } catch (error) {
-  //     console.log(error);
-  //     return res.status(500).json(error);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
     
-  //   }
-  // }
+    }
+  }
 
 
 }
