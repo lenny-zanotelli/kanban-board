@@ -9,8 +9,8 @@ const listController = {
         lists = await List.find({
           relations: {
             cards: {
-              tags: {
-                cards: true
+              cardToTags: {
+                tag: true,
               }
             }
           },

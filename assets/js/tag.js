@@ -2,28 +2,21 @@ const tagModule = {
 
   makeTagInDOM: (tag) => {
     const tagDOM = document.createElement('span');
+    console.log('tagM', tag);
 
     tagDOM.dataset.tagId = tag.id;
     tagDOM.textContent = tag.name;
     tagDOM.style.backgroundColor = tag.color;
     tagDOM.classList.add('tag');
     
-    // tagDOM.addEventListener('dblclick', tagModule.dissociateTagFromCard);
-    if (tag.card && tag.cards.length > 0){
-      
-      for (const card of tag.cards) {
-          const cardId = card.id;
+    // tagDOM.addEventListener('dblclick', tagModule.dissociateTagFromCard);      
+          const cardId = tag.cards[0].id;
           console.log('cardid', cardId);
           
-          if (cardId === tag.card.id) {
             const goodCard = document.querySelector(`.box[data-card-id="${cardId}"]`);
             goodCard.querySelector(".tags-container").appendChild(tagDOM);
             console.log('goodcard', goodCard);
-            break;
-          }
-        }    
-      }
-      console.log('tagM', tag);
+    
   },
 
   showAssociateTagModal: async (event) => {

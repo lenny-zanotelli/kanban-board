@@ -10,7 +10,6 @@ const cardController = {
       cards = await Card.find({
         relations: {
           list: true,
-          tags: true
         },
         where: {
           list: {
@@ -84,9 +83,6 @@ const cardController = {
         }
         if (req.body.position) {
           cardToUpdate.position = req.body.position;
-        }
-        if (req.body.tags) {
-          cardToUpdate.tags = [...cardToUpdate.tags, ...req.body.tags];
         }
         await cardToUpdate.save();
         res.status(200).json('Card has been updated');
