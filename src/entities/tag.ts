@@ -1,6 +1,12 @@
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Card } from "./card";
 import { Length } from "class-validator";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
+import { CardToTag } from "./cardToTag";
 
 @Entity()
 export class Tag extends BaseEntity {
@@ -14,8 +20,6 @@ export class Tag extends BaseEntity {
   @Column()
   color: string;
 
-  @ManyToMany(() => Card, (card) => card.tags, {
-    cascade: true,
-  })
-  cards: Card[]
+  @OneToMany(() => CardToTag, cardToTag => cardToTag.tag)
+  cardToTags: CardToTag[];
 }

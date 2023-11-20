@@ -1,11 +1,18 @@
 import { Length } from "class-validator";
-import { BaseEntity, Column, Entity, Generated, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  Generated,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
+import { CardToTag } from "./cardToTag";
 import { List } from "./list";
-import { Tag } from "./tag";
 
 @Entity()
 export class Card extends BaseEntity {
-  [x: string]: any;
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -26,12 +33,9 @@ export class Card extends BaseEntity {
   })
   list: List
 
-  @ManyToMany(() => Tag,  (tag) => tag.cards, { eager: true })
-  @JoinTable({
-    name: 'card_has_tags',
-    joinColumn: { name: 'cardId' },
-    inverseJoinColumn: { name: 'tagId'}
+  @OneToMany(() => CardToTag, cardToTag => cardToTag.card, {
+    eager: true
   })
-  tags: Tag[]
+  cardToTags: CardToTag[];
 
 }
