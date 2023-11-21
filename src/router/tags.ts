@@ -11,5 +11,6 @@ router.post('/tags', tagController.createTag);
 router.put('/tags/:id', tagController.modifyTag);
 router.delete('/tags/:id', tagController.deleteTag);
 router.post('/cards/:id/tags', tagController.associateTagToCard);
+router.delete('/cards/:cardId/tags/:tagId', tagController.removeTagFromCard)
 
 export default router;

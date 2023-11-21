@@ -121,6 +121,47 @@ const tagController = {
       return res.status(500).json(error);
     
     }
+  },
+
+  removeTagFromCard: async (req: Request, res: Response) => {
+    try {
+      const cardId: number = parseInt(req.params.cardId);
+      const tagId: number = parseInt(req.params.tagId);
+ 
+
+      let card = await Card.findOne({
+        relations: {
+          cardToTags: {
+            tag: true,
+            card: true
+          }
+        },
+          where: {
+            id: cardId
+          }
+      });
+          
+        if (!card) {
+          return res.status(404).json('Cannot find card with id '+ cardId);
+        }
+
+        const cardToTag = card.cardToTags.find((el) => el.tag.id === tagId);
+        console.log(cardToTag);
+        // let tag = await Tag.findOneByOrFail({id: tagId});
+  
+        if (!cardToTag) {
+          return res.status(404).json('Card does not have the specified tag');
+        }
+
+        await cardToTag.remove();
+
+        return res.status(200).json(card);
+      
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
+      
+    }
   }
 
 
