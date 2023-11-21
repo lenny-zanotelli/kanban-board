@@ -147,7 +147,6 @@ const tagController = {
 
         const cardToTag = card.cardToTags.find((el) => el.tag.id === tagId);
         console.log(cardToTag);
-        // let tag = await Tag.findOneByOrFail({id: tagId});
   
         if (!cardToTag) {
           return res.status(404).json('Card does not have the specified tag');
