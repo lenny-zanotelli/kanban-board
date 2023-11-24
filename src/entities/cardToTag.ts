@@ -7,9 +7,13 @@ export class CardToTag extends BaseEntity  {
   @PrimaryGeneratedColumn()
   CardToTagId: number;
 
-  @ManyToOne(() => Card, (card) => card.cardToTags)
+  @ManyToOne(() => Card, (card) => card.cardToTags, {
+    onDelete: 'CASCADE'
+  })
   card: Card;
 
-  @ManyToOne(() => Tag, (tag) => tag.cardToTags)
+  @ManyToOne(() => Tag, (tag) => tag.cardToTags, {
+    onDelete: 'CASCADE'
+  })
   tag: Tag;
 }

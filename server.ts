@@ -35,7 +35,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'use.fontawesome.com']
+      scriptSrc: ["'self'", "'unsafe-inline'", 'use.fontawesome.com', 'https://cdn.jsdelivr.net']
     },
   })
 );

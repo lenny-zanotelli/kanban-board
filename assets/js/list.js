@@ -58,6 +58,15 @@ const listModule = {
     clone.querySelector('.edit-list-form').addEventListener('submit', listModule.handleEditTitleListForm);
     clone.querySelector('.delete-list-btn').addEventListener('click', listModule.deleteList);
 
+
+    const cardContainer = clone.querySelector('.panel-block');
+
+    Sortable.create(cardContainer, {
+      group: 'lists',
+      draggable: '.box',
+      animation: 150
+    });
+
     const listContainer = document.querySelector('#lists-container');
     const firstList = listContainer.querySelector('.panel');
 
@@ -72,30 +81,7 @@ const listModule = {
 
 
   },
-  getListsFromAPI: async () => {
-    try {
-      const response = await fetch(`${utilModule.base_url}/lists`);
-      const json = await response.json();
 
-      if (!response.ok) { throw new Error('Issue with http request', json)}
-
-      for (const list of json) {
-        listModule.makeListInDOM(list);
-        for (const card of list.cards) {
-          cardModule.makeCardInDOM(card);
-          for (const tag of card.cardToTags) {
-            tagModule.makeTagInDOM(tag);
-          }
-        }
-      }
-
-
-    } catch (error) {
-      console.error(error);
-      utilModule.notify(error.message, 5000, 'is-danger');
-
-    }
-  },
 
   deleteList: async (event) => {
     event.preventDefault();
@@ -142,8 +128,6 @@ const listModule = {
     const listTitle = form.previousElementSibling;
 
     const listId = formData.get('id');
-
-    console.log(stringify);
     
     try {
       const response = await fetch(
@@ -168,6 +152,33 @@ const listModule = {
       form.classList.add('is-hidden');
       listTitle.classList.remove('is-hidden');
   
+  },
+
+  handleDragList: (event) => {
+    const lists = document.querySelectorAll('.panel');
+
+    lists.forEach(async (list, index) => {
+      const formData = new FormData();
+
+      formData.set('position', index);
+
+      try {
+        const response = await fetch(`${utilModule.base_url}/lists/${list.dataset.listId}`, {
+          method: 'PUT',
+          body: formData,
+          headers: {
+            'content-type': 'application/json'
+          }
+        });
+        const jsonData = await response.json();
+
+        if(!response.ok) { throw jsonData }
+      } catch (error) {
+        console.log(error);
+        utilsModule.notify(error.message, 5000, 'is-danger');
+        
+      }
+    })
   }
 
 }

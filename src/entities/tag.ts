@@ -20,6 +20,8 @@ export class Tag extends BaseEntity {
   @Column()
   color: string;
 
-  @OneToMany(() => CardToTag, cardToTag => cardToTag.tag)
+  @OneToMany(() => CardToTag, cardToTag => cardToTag.tag, {
+    onDelete: 'CASCADE'
+  })
   cardToTags: CardToTag[];
 }
