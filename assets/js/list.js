@@ -1,14 +1,7 @@
 const listModule = {
 
-  addEventToListModalBtn: () => {
-    const addListButton = document.getElementById('addListButton');
-
-    addListButton.addEventListener('click', listModule.showAddListModal);
-
-  },
   showAddListModal: () => {
     const modal = document.getElementById('addListModal');
-
     modal.classList.add('is-active');
   },
 
@@ -41,9 +34,11 @@ const listModule = {
 
       utilModule.notify(error.message, 5000, 'is-danger');
       console.log(error);
-    } 
+    } finally {
       utilModule.hideModals();
       form.reset();
+      
+    }
   },
 
   makeListInDOM: (list) => {
@@ -53,7 +48,8 @@ const listModule = {
 
     clone.querySelector('h2').textContent = list.name;
     clone.querySelector('.panel').dataset.listId = list.id;
-    clone.querySelector("form input[name='id']").value = list.id;
+    clone.querySelector("form input[name='list-id']").value = list.id;
+    clone.querySelector('.add-card-btn').addEventListener('click', cardModule.showAddCardModal);
     clone.querySelector('h2').addEventListener('dblclick', listModule.showEditListForm);
     clone.querySelector('.edit-list-form').addEventListener('submit', listModule.handleEditTitleListForm);
     clone.querySelector('.delete-list-btn').addEventListener('click', listModule.deleteList);
@@ -70,18 +66,22 @@ const listModule = {
     const listContainer = document.querySelector('#lists-container');
     const firstList = listContainer.querySelector('.panel');
 
-    
-    
+  
     if (firstList) {
       firstList.before(clone);
     } else {
       listContainer.appendChild(clone);
     }
-    cardModule.addEventToCardModalBtn();
 
 
   },
-
+  showEditListForm: (event) => {
+    const listTitle = event.target;
+    
+    listTitle.classList.add('is-hidden');
+    listTitle.nextElementSibling.classList.remove('is-hidden');
+    
+  },
 
   deleteList: async (event) => {
     event.preventDefault();
@@ -96,9 +96,10 @@ const listModule = {
         }
       );
       const json = response.json();
-      if (!response.ok) throw json;
+      if (!response.ok) {throw json};
       
       list.remove();
+
       utilModule.notify('List has been deleted!', 5000,'is-success');
     } catch (error) {
       console.log(error);
@@ -106,17 +107,7 @@ const listModule = {
       
     }
   },
-  showEditListForm: (event) => {
-    const listTitle = event.target;
-    listTitle.classList.add('is-hiddden');
 
-    const form = listTitle.nextElementSibling;
-    form.querySelector('input[type=hidden]').value = listTitle.closest('.panel').dataset.listId;
-
-    form.addEventListener('submit', listModule.updateList);
-
-    form.classList.remove('is-hidden');
-  },
 
   handleEditTitleListForm: async (event) => {
     event.preventDefault();
@@ -127,7 +118,7 @@ const listModule = {
     const stringify = JSON.stringify(jsonData);
     const listTitle = form.previousElementSibling;
 
-    const listId = formData.get('id');
+    const listId = formData.get('list-id');
     
     try {
       const response = await fetch(

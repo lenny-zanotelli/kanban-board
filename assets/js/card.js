@@ -1,16 +1,5 @@
 const cardModule = {
 
-  addEventToCardModalBtn: () => {
-    // SELECT ADD CARD BTNS
-    const showCardBtns = document.querySelectorAll(
-      '.panel a.is-pulled-right'
-    );
-
-    for (const btn of showCardBtns) {
-      btn.addEventListener('click', cardModule.showAddCardModal);
-    }
-  },
-
   showAddCardModal: (event) => {
     event.preventDefault();
     const modal = document.getElementById('addCardModal');

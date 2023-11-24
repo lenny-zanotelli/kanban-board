@@ -16,7 +16,8 @@ export class List extends BaseEntity{
   position: number;
 
   @OneToMany(() => Card, (cards) => cards.list, 
-  { cascade: true, 
+  { 
+    cascade: true, 
     onDelete: "CASCADE" 
   })
   cards: Card[];

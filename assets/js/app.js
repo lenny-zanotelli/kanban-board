@@ -6,24 +6,24 @@ const app = {
   },
 
   addListenerToActions: () => {
-    listModule.addEventToListModalBtn();
+
+    // Event on 'Add a List'
+    const addListButton = document.getElementById('addListButton');
+    addListButton.addEventListener('click', listModule.showAddListModal);
 
     // Event for Hiding CLOSING MODALS
-    const closeBtns = document.querySelectorAll('.close');
-    closeBtns.forEach((btn) => btn.addEventListener('click', utilModule.hideModals));
+    const closeModalBtns = document.querySelectorAll('.close');
+    closeModalBtns.forEach((btn) => btn.addEventListener('click', utilModule.hideModals));
 
-
-    // SELECT ADD LIST FORM
+    // Event on 'Add a List' FORM
     const addListForm = document.querySelector('#addListModal form');
     addListForm.addEventListener('submit', listModule.handleAddListForm);
 
-    cardModule.addEventToCardModalBtn();
-
-    // SELECT ADD CARD FORM
+    // Event on 'Add a Card' FORM
     const addCardform = document.querySelector('#addCardModal form');
     addCardform.addEventListener('submit', cardModule.handleAddCardForm);
 
-    // SELECT ADD TAG FORM
+    // Event on 'Associate a Tag to a Card' FORM
     const associateTagForm = document.querySelector('#associateTagModal form');
     associateTagForm.addEventListener('submit', tagModule.associateTagToCard);
       
@@ -46,6 +46,12 @@ const app = {
         }
       }
 
+      const listContainer = document.querySelector('.card-lists');
+
+      Sortable.create(listContainer, {
+        draggable: '.panel',
+        onEnd: listModule.handleDragList
+      });
 
     } catch (error) {
       console.error(error);
