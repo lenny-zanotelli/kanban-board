@@ -55,7 +55,6 @@ const tagModule = {
     const jsonData = Object.fromEntries(formData.entries());
     const stringify = JSON.stringify(jsonData);
     const cardId = formData.get('cardId');
-    console.log(cardId);
 
     try {
       const response = await fetch(`${utilModule.base_url}/cards/${cardId}/tags`, {
@@ -73,13 +72,14 @@ const tagModule = {
         const tag = json.tags.find(tag => tag.id == formData.get("tagId"));
         
         tagModule.makeTagInDOM(tag);
-        console.log('tag tag', tag);
 
       }
 
       
+      utilModule.notify('Tag associate with card!', 5000, 'is-success')
     } catch (error) {
       console.log(error);
+      utilModule.notify(error.message, 5000, 'is-danger')
 
     }
     utilModule.hideModals();

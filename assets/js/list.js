@@ -31,11 +31,11 @@ const listModule = {
       });
       
       const json = await response.json();
-      console.log(json);
       
       if (!response.ok) { throw new Error(json) }
+
       listModule.makeListInDOM(json);
-      utilModule.notify('is-success', 5000, 'New List has been created!');
+      utilModule.notify('New List has been created!', 5000,'is-success');
     
     } catch (error) {
       utilModule.notify(error.message, 5000, 'is-danger');
@@ -50,25 +50,23 @@ const listModule = {
     // IMPORTNODE => Allow us to clone our template, true argument allow to retrieve all the children ot this template 
     const clone = document.importNode(template.content, true);
 
-    const listTitle = clone.querySelector('h2');
-    listTitle.textContent = list.name;
-
+    clone.querySelector('h2').textContent = list.name;
     clone.querySelector('.panel').dataset.listId = list.id;
-
     clone.querySelector('.delete-list-btn').addEventListener('click', listModule.deleteList);
 
     const listContainer = document.querySelector('.card-lists');
     const firstElement = listContainer.querySelector('.panel');
 
+    
+    clone.querySelector('h2').addEventListener('dblclick', listModule.showEditListForm);
+    
     if (firstElement) {
       firstElement.before(clone);
     } else {
       listContainer.appendChild(clone);
     }
-
-    listTitle.addEventListener('dblclick', listModule.showEditListForm);
-
     cardModule.addEventToCardModalBtn();
+
 
   },
   getListsFromAPI: async () => {
@@ -114,7 +112,7 @@ const listModule = {
       if (!response.ok) throw json;
       
       list.remove();
-      utilModule.notify('is-success', 5000,'List has been deleted!');
+      utilModule.notify('List has been deleted!', 5000,'is-success');
     } catch (error) {
       console.log(error);
       utilModule.notify(error.message, 5000, 'is-danger');

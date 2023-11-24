@@ -31,8 +31,6 @@ const cardModule = {
     const jsonData = Object.fromEntries(formData.entries());
     const stringify = JSON.stringify(jsonData);
     try {
-      console.log(stringify);
-  
       const response = await fetch(`${utilModule.base_url}/cards`, {
         method: 'POST',
         body: stringify,
@@ -48,7 +46,7 @@ const cardModule = {
       }
   
       cardModule.makeCardInDOM(json);
-      utilModule.notify('is-success', 'New Card has been created!');
+      utilModule.notify('New Card has been created!', 5000, 'is-success');
       
     } catch (error) {
       console.log(error);
@@ -63,6 +61,7 @@ const cardModule = {
   makeCardInDOM: (card) => {
     const template = document.getElementById('template-card');
     const clone = document.importNode(template.content, true);
+    console.log('makeCardInDOM',card);
     clone.querySelector('.card-name').textContent = card.title;
     clone.querySelector('.box').dataset.cardId = card.id;
     clone.querySelector('form input[name="id"]').value = card.id;
@@ -118,7 +117,7 @@ const cardModule = {
       cardTitle.textContent = json.title;
       cardTitle.parentElement.parentElement.style.backgroundColor = json.color;
 
-      utilModule.notify('is-success', 5000,'Card has been updated!');
+      utilModule.notify('Card has been updated!', 5000,'is-success');
 
     } catch (error) {
       console.log(error);
@@ -144,7 +143,8 @@ const cardModule = {
     if (!response.ok) throw json;
 
     event.target.closest('.box').remove();
-      
+    utilModule.notify('Card has been deleted!', 5000, 'is-success');
+
     } catch (error) {
       utilModule.notify(error.message, 5000, 'is-danger');
       
