@@ -2,7 +2,6 @@ const tagModule = {
 
   makeTagInDOM: (tag) => {
     const tagDOM = document.createElement('span');
-    console.log('tagM', tag);
 
     tagDOM.dataset.tagId = tag.tag.id;
     tagDOM.textContent = tag.tag.name;
@@ -14,7 +13,6 @@ const tagModule = {
     
     const goodCard = document.querySelector(`.box[data-card-id="${cardId}"]`);
     goodCard.querySelector(".tags-container").appendChild(tagDOM);
-    console.log('goodcard', goodCard);
     
   },
 
@@ -65,7 +63,6 @@ const tagModule = {
         }
       });
       const json = await response.json();
-      console.log('tagcard', json);
       if (!response.ok) { throw Error('Cant havejson tag') }
 
       if (json.tags && Array.isArray(json.tags)) {

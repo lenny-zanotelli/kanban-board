@@ -61,7 +61,7 @@ const cardModule = {
   makeCardInDOM: (card) => {
     const template = document.getElementById('template-card');
     const clone = document.importNode(template.content, true);
-    console.log('makeCardInDOM',card);
+    
     clone.querySelector('.card-name').textContent = card.title;
     clone.querySelector('.box').dataset.cardId = card.id;
     clone.querySelector('form input[name="id"]').value = card.id;

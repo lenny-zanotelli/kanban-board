@@ -32,12 +32,13 @@ const listModule = {
       
       const json = await response.json();
       
-      if (!response.ok) { throw new Error(json) }
+      if (!response.ok) { throw new Error('erreur') }
 
       listModule.makeListInDOM(json);
       utilModule.notify('New List has been created!', 5000,'is-success');
-    
+
     } catch (error) {
+
       utilModule.notify(error.message, 5000, 'is-danger');
       console.log(error);
     } 
@@ -52,16 +53,18 @@ const listModule = {
 
     clone.querySelector('h2').textContent = list.name;
     clone.querySelector('.panel').dataset.listId = list.id;
+    clone.querySelector("form input[name='id']").value = list.id;
+    clone.querySelector('h2').addEventListener('dblclick', listModule.showEditListForm);
+    clone.querySelector('.edit-list-form').addEventListener('submit', listModule.handleEditTitleListForm);
     clone.querySelector('.delete-list-btn').addEventListener('click', listModule.deleteList);
 
-    const listContainer = document.querySelector('.card-lists');
-    const firstElement = listContainer.querySelector('.panel');
+    const listContainer = document.querySelector('#lists-container');
+    const firstList = listContainer.querySelector('.panel');
 
     
-    clone.querySelector('h2').addEventListener('dblclick', listModule.showEditListForm);
     
-    if (firstElement) {
-      firstElement.before(clone);
+    if (firstList) {
+      firstList.before(clone);
     } else {
       listContainer.appendChild(clone);
     }
@@ -75,11 +78,9 @@ const listModule = {
       const json = await response.json();
 
       if (!response.ok) { throw new Error('Issue with http request', json)}
-      console.log('jsonlist', json);
 
       for (const list of json) {
         listModule.makeListInDOM(list);
-
         for (const card of list.cards) {
           cardModule.makeCardInDOM(card);
           for (const tag of card.cardToTags) {
@@ -166,7 +167,6 @@ const listModule = {
     } 
       form.classList.add('is-hidden');
       listTitle.classList.remove('is-hidden');
-      form.reset();
   
   }
 
