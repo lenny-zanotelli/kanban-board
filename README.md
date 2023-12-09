@@ -35,6 +35,9 @@ I designed a minimalist user interfce as my primary focus was on implementing th
 
 ## Setup
 
+You must have Docker installed.
+You can also use this command `docker compose up --build` and go at `http://localhost:3000`.
+
 Clone this repo to your desktop and run `npm install` to install all the dependencies.
 Create an `.env` file and change the data necessary for the connection.
 Create the database and an user.
