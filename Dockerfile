@@ -13,4 +13,5 @@ COPY tsconfig.json tsconfig.json
 COPY src src
 COPY server.ts server.ts
 
-CMD [ "npm", "start" ]
+
+CMD npm run resetDb && npm start

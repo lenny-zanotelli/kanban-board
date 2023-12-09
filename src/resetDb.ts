@@ -87,6 +87,9 @@ async function main() {
   card2.cardToTags = [cardToTag4];
   await card1.save();
   await card2.save();
+
+  await db.destroy();
+
 }
 
 main();
