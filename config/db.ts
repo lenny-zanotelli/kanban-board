@@ -4,12 +4,12 @@ dotenv.config();
 
 export default new DataSource({
   type: 'postgres',
-  host: process.env.TYPEORM_HOST,
+  host: 'db',
   port: 5432,
-  username: process.env.TYPEORM_USER,
-  password: process.env.TYPEORM_PASSWORD,
-  database: process.env.TYPEORM_DATABASE,
+  username: 'postgres',
+  password: 'example',
+  database: 'postgres',
   entities: ['src/entities/*.ts'],
   synchronize: true, //do not use in prod
-  logging: "all"
+  logging: ["query", "error"],
 });
