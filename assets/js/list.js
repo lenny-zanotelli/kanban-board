@@ -60,7 +60,8 @@ const listModule = {
     Sortable.create(cardContainer, {
       group: 'lists',
       draggable: '.box',
-      animation: 150
+      animation: 150,
+      onEnd: cardModule.handleDragCard
     });
 
     const listContainer = document.querySelector('#lists-container');

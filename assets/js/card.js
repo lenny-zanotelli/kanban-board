@@ -138,6 +138,58 @@ const cardModule = {
       utilModule.notify(error.message, 5000, 'is-danger');
       
     }
+  },
+
+  handleDragCard: (event) => {
+    const oldList = event.from;
+    const newList = event.to;
+
+    let cards = oldList.querySelectorAll(".box")
+
+    cardModule.updateAllCards(cards);
+
+    /*if old list is equal to the newList, 
+    then we are sure that there is not other list involved that the oldList
+    so we stop the method
+    */
+    if(oldList === newList) return;
+
+    cards = newList.querySelectorAll(".box");
+
+    const listId = newList.closest(".panel").dataset.listId;
+    console.log(listId);
+
+    cardModule.updateAllCards(cards, listId);
+
+  },
+
+  updateAllCards: (cards, listId = null) => {
+    
+    cards.forEach(async (card, index) => {
+
+      const formData = new FormData();
+      
+      formData.set('position', index);
+
+      if (listId){ formData.set('listId', listId)}
+
+      try {
+
+        const response = await fetch(`${utilModule.base_url}/cards/${card.dataset.cardId}`,{
+          method: 'PUT',
+          body: formData
+        });
+        console.log(formData);
+        const jsonData = await response.json();
+
+        if(!response.ok) { throw jsonData }
+        
+      } catch (error) {
+        console.error(error);
+        utilModule.notify(error.message, 5000, 'is-danger');
+        
+      }
+    });
   }
 
 }

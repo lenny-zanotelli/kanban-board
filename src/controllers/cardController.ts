@@ -75,7 +75,7 @@ const cardController = {
         if (req.body.title) {
           cardToUpdate.title = req.body.title;
         }
-        if (req.body.list) {
+        if (req.body.listId) {
           cardToUpdate.list = req.body.listId;
         }
         if (req.body.color) {
