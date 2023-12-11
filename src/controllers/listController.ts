@@ -73,6 +73,9 @@ const listController = {
       if (req.body.name) {
         listToUpdate.name = req.body.name;
       }
+      if (req.body.position) {
+        listToUpdate.position = req.body.position;
+      }
       await listToUpdate.save();
       res.status(200).json('List has been updated');
     } catch (error) {

@@ -64,14 +64,7 @@ const listModule = {
     });
 
     const listContainer = document.querySelector('#lists-container');
-    const firstList = listContainer.querySelector('.panel');
-
-  
-    if (firstList) {
-      firstList.before(clone);
-    } else {
-      listContainer.appendChild(clone);
-    }
+    listContainer.appendChild(clone);
 
 
   },
@@ -137,7 +130,7 @@ const listModule = {
       listTitle.textContent = json.name;
       
     } catch (error) {
-      console.log(error);
+      console.error(error);
       utilModule.notify(error.message, 3000, 'is-danger');
     } 
       form.classList.add('is-hidden');
@@ -145,7 +138,7 @@ const listModule = {
   
   },
 
-  handleDragList: (event) => {
+  handleDragList: () => {
     const lists = document.querySelectorAll('.panel');
 
     lists.forEach(async (list, index) => {
@@ -157,16 +150,14 @@ const listModule = {
         const response = await fetch(`${utilModule.base_url}/lists/${list.dataset.listId}`, {
           method: 'PUT',
           body: formData,
-          headers: {
-            'content-type': 'application/json'
-          }
         });
         const jsonData = await response.json();
+        console.log(jsonData);
 
         if(!response.ok) { throw jsonData }
       } catch (error) {
-        console.log(error);
-        utilsModule.notify(error.message, 5000, 'is-danger');
+        console.error(error);
+        utilModule.notify(error.message, 5000, 'is-danger');
         
       }
     })

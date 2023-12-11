@@ -1,4 +1,5 @@
 # Dockerfile
+
 FROM node:lts-alpine
 
 RUN apk --no-cache add curl
@@ -12,6 +13,5 @@ COPY config config
 COPY tsconfig.json tsconfig.json
 COPY src src
 COPY server.ts server.ts
-
 
 CMD npm run resetDb && npm start
