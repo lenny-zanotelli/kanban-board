@@ -58,7 +58,6 @@ Project is: _in progress_
 ## Feature to Implement
 
 - Remove tag from card (FRONT)
-- Add the Drag&Drop withe SortableJS
 
 ## Room for Improvement
 
