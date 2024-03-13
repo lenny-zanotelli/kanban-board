@@ -9,8 +9,12 @@
 
 import router from '@adonisjs/core/services/router'
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
+router.get('/', async ({ request, response }) => {
+  console.log(request.url())
+  console.log(request.body())
+
+  response.send('hello world')
+  response.send({ hello: 'world' })
 })
+
+router.get('home', '#controllers/home_controller.handle')
