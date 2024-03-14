@@ -17,4 +17,5 @@ router.get('/', async ({ request, response }) => {
   response.send({ hello: 'world' })
 })
 
-router.get('home', '#controllers/home_controller.handle')
+router.get('lists', '#controllers/lists_controller.index')
+router.get('lists/:id', '#controllers/lists_controller.show')
