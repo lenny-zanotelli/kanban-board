@@ -10,6 +10,12 @@ export default class List extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
+  @column()
+  declare title: string
+
+  @column()
+  declare position: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
