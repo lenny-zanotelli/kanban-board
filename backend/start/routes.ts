@@ -17,4 +17,4 @@ router.get('/', async () => {
 })
 
 router.get('users', [UsersController, 'index'])
-router.resource('lists', ListsController)
+router.resource('lists', ListsController).apiOnly()
