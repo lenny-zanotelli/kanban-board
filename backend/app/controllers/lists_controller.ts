@@ -40,5 +40,8 @@ export default class ListsController {
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {}
+  async destroy({ params }: HttpContext) {
+    const listId = params.id
+    return this.listService.delete(listId)
+  }
 }
