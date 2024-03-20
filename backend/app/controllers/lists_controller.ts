@@ -31,7 +31,11 @@ export default class ListsController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {}
+  async update({ params, request }: HttpContext) {
+    const listId = params.id
+    const body = request.body()
+    return this.listService.update(listId, body)
+  }
 
   /**
    * Delete record
