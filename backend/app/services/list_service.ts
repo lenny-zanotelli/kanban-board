@@ -6,7 +6,7 @@ export default class ListService {
   }
 
   async show(id: number) {
-    return await List.find(id)
+    return await List.findOrFail(id)
   }
 
   async create(data: Partial<List>) {
@@ -18,5 +18,10 @@ export default class ListService {
     return await List.query()
       .where('id', id)
       .update({ ...data })
+  }
+
+  async delete(id: number) {
+    const listToDelete = await List.findOrFail(id)
+    return await listToDelete.delete()
   }
 }
