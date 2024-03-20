@@ -1,9 +1,14 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import List from './list.js'
 
 export default class Card extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
+
+  @column()
+  declare listId: number
 
   @column()
   declare title: string
@@ -19,4 +24,7 @@ export default class Card extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  @belongsTo(() => List)
+  declare list: BelongsTo<typeof List>
 }
