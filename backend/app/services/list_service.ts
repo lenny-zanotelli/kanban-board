@@ -13,4 +13,10 @@ export default class ListService {
     const newList = await List.create({ ...data })
     return await newList.save()
   }
+
+  async update(id: number, data: Partial<List>) {
+    return await List.query()
+      .where('id', id)
+      .update({ ...data })
+  }
 }
