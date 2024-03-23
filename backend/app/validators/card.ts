@@ -8,7 +8,7 @@ export const createCardValidator = vine.compile(
   vine.object({
     title: vine.string().trim().minLength(3).maxLength(30),
     position: vine.number({ strict: true }).positive().withoutDecimals(),
-    color: vine.string().hexCode(),
+    color: vine.string().hexCode().optional(),
   })
 )
 
