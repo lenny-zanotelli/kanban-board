@@ -5,14 +5,14 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').notNullable()
+      table.increments('id').notNullable().primary()
       table.string('title').notNullable()
       table.increments('position', { primaryKey: false }).notNullable()
-      table.string('color').notNullable().defaultTo('#ffffff')
+      table.string('color').nullable().defaultTo('#ffffff')
       table.integer('list_id').unsigned().references('lists.id').onDelete('CASCADE')
 
-      table.timestamp('created_at')
-      table.timestamp('updated_at')
+      table.timestamp('created_at').notNullable()
+      table.timestamp('updated_at').notNullable()
     })
   }
 

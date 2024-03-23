@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import List from './list.js'
+import Tag from './tag.js'
 
 export default class Card extends BaseModel {
   @column({ isPrimary: true })
@@ -14,7 +15,7 @@ export default class Card extends BaseModel {
   declare title: string
 
   @column()
-  declare position: string
+  declare position: number
 
   @column()
   declare color: string
@@ -27,4 +28,7 @@ export default class Card extends BaseModel {
 
   @belongsTo(() => List)
   declare list: BelongsTo<typeof List>
+
+  @hasMany(() => Tag)
+  declare tags: HasMany<typeof Tag>
 }
