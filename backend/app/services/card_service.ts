@@ -1,6 +1,6 @@
 import Card from '#models/card'
 
-export default class ListService {
+export default class CardService {
   async all() {
     return await Card.all()
   }
