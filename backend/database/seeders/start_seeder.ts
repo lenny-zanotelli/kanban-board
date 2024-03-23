@@ -1,5 +1,6 @@
 import Card from '#models/card'
 import List from '#models/list'
+import Tag from '#models/tag'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
@@ -39,6 +40,34 @@ export default class extends BaseSeeder {
         title: 'Carte 3',
         color: '#A4CB80',
         listId: 1,
+      },
+    ])
+
+    await Tag.createMany([
+      {
+        name: 'Tag 1',
+        color: '#c1e7ff',
+        cardId: 1,
+      },
+      {
+        name: 'Tag 2',
+        color: '#A4CB80',
+        cardId: 1,
+      },
+      {
+        name: 'Tag 3',
+        color: '#c1e7ff',
+        cardId: 1,
+      },
+      {
+        name: 'Tag 4',
+        color: '#A4CB80',
+        cardId: 2,
+      },
+      {
+        name: 'Tag 5',
+        color: '#c1e7ff',
+        cardId: 3,
       },
     ])
   }
