@@ -1,15 +1,23 @@
+import Card from '#models/card'
 import Tag from '#models/tag'
+
+type CreateTagInput = {
+  name: string
+  color?: string
+}
 
 export default class TagService {
   async all() {
     return await Tag.all()
   }
 
-  async show(id: number) {
-    return await Tag.findOrFail(id)
+  async associateToCard(cardId: number, tagId: number) {
+    let card = await Card.findOrFail(cardId)
+    let tag = await Tag.findOrFail(tagId)
+    return await card.related('tags').save(tag)
   }
 
-  async create(data: Partial<Tag>) {
+  async create(data: CreateTagInput) {
     const newTag = await Tag.create({ ...data })
     return await newTag.save()
   }

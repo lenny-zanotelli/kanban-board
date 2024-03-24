@@ -2,11 +2,16 @@ import List from '#models/list'
 
 export default class ListService {
   async all() {
-    return await List.all()
+    return await List.query()
+      .orderBy('position', 'asc')
+      .preload('cards', (cardsQuery) => {
+        cardsQuery.orderBy('position', 'asc').preload('tags')
+      })
   }
 
   async show(id: number) {
-    return await List.findOrFail(id)
+    const list = await List.findOrFail(id)
+    return list.load('cards')
   }
 
   async create(data: Partial<List>) {
