@@ -8,7 +8,8 @@ export default class CardsController {
   constructor(protected cardService: CardService) {}
 
   /**
-   * Display a list of resource
+   * Returns all cards in a list.
+   * Each card must carry the tags associated with it.
    */
   async cardsInAList({ params }: HttpContext) {
     const listId = params.id
