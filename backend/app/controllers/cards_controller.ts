@@ -10,8 +10,9 @@ export default class CardsController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext) {
-    return this.cardService.all()
+  async cardsInAList({ params }: HttpContext) {
+    const listId = params.id
+    return this.cardService.getCardsInList(listId)
   }
 
   /**

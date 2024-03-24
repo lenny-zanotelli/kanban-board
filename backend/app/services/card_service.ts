@@ -1,8 +1,12 @@
 import Card from '#models/card'
 
 export default class CardService {
-  async all() {
-    return await Card.all()
+  async getCardsInList(listId: number) {
+    return await Card.query()
+      .where('list_id', listId)
+      .preload('list', (listQuery) => {
+        listQuery.where('id', listId)
+      })
   }
 
   async show(id: number) {
