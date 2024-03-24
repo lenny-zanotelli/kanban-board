@@ -7,6 +7,7 @@ export default class CardService {
       .preload('list', (listQuery) => {
         listQuery.where('id', listId)
       })
+      .preload('tags')
   }
 
   async show(id: number) {
