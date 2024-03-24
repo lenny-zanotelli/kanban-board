@@ -22,11 +22,12 @@ export default class TagsController {
   }
 
   /**
-   * Show individual record
+   * Associates a Tag with the targeted Card
    */
-  async show({ params }: HttpContext) {
-    const tagId = params.id
-    return this.tagService.show(tagId)
+  async associateTagToCard({ params, request }: HttpContext) {
+    const cardId = params.id
+    const tagId = request.body().tag_id
+    return this.tagService.associateToCard(cardId, tagId)
   }
 
   /**

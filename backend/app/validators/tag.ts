@@ -7,7 +7,7 @@ import vine from '@vinejs/vine'
 export const createTagValidator = vine.compile(
   vine.object({
     name: vine.string().trim().minLength(2).maxLength(10),
-    color: vine.string().hexCode(),
+    color: vine.string().hexCode().optional(),
   })
 )
 
@@ -17,7 +17,7 @@ export const createTagValidator = vine.compile(
  */
 export const updateTagValidator = vine.compile(
   vine.object({
-    name: vine.string().trim().minLength(2).maxLength(10),
+    name: vine.string().trim().minLength(2).maxLength(10).optional(),
     color: vine.string().hexCode().optional(),
   })
 )
