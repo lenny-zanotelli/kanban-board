@@ -32,4 +32,9 @@ export default class TagService {
     const tagToDelete = await Tag.findOrFail(id)
     return await tagToDelete.delete()
   }
+
+  async removeTagFromCard(tagId: number) {
+    let tag = await Tag.findOrFail(tagId)
+    return await tag.related('card').dissociate()
+  }
 }
