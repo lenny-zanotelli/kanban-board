@@ -46,4 +46,11 @@ export default class TagsController {
     const tagId = params.id
     return this.tagService.delete(tagId)
   }
+  /**
+   * Dissociate a Tag from a Card
+   */
+  async removeTagFromCard({ params }: HttpContext) {
+    const tagId = params.id
+    return this.tagService.removeTagFromCard(tagId)
+  }
 }
